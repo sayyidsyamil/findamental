@@ -1,0 +1,12 @@
+services:
+  findamental:
+    build:
+      context: .
+      dockerfile: Dockerfile.droplet
+    env_file: .env
+    volumes:
+      - ./data/extracted_cache:/app/data/extracted_cache:ro
+      - ./data/company_index.json:/app/data/company_index.json:ro
+      - ./data/sector_medians.json:/app/data/sector_medians.json:ro
+      - ./data/line_items_dict.json:/app/data/line_items_dict.json:ro
+    restart: "no"

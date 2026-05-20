@@ -1,0 +1,40 @@
+{
+  "revenue": {
+    "english": ["revenue", "total revenue", "operating revenue", "total income"],
+    "bahasa_malaysia": ["hasil", "jumlah hasil", "pendapatan"]
+  },
+  "cogs": {
+    "english": ["cost of sales", "cost of goods sold", "cost of revenue"],
+    "bahasa_malaysia": ["kos jualan"]
+  },
+  "gross_profit": {
+    "english": ["gross profit"],
+    "bahasa_malaysia": ["untung kasar"]
+  },
+  "operating_income": {
+    "english": ["operating profit", "operating income", "profit from operations"],
+    "bahasa_malaysia": ["untung operasi"]
+  },
+  "net_income": {
+    "english": [
+      "net profit",
+      "profit for the period",
+      "profit attributable to owners",
+      "profit attributable to equity holders",
+      "profit attributable to equity holders of the bank"
+    ],
+    "bahasa_malaysia": ["untung bersih"]
+  },
+  "total_assets": {
+    "english": ["total assets"],
+    "bahasa_malaysia": ["jumlah aset"]
+  },
+  "total_equity": {
+    "english": ["total equity", "shareholders' equity"],
+    "bahasa_malaysia": ["jumlah ekuiti"]
+  },
+  "eps": {
+    "english": ["earnings per share", "basic eps", "basic EPS", "basic earnings", "diluted earnings", "diluted earning"],
+    "bahasa_malaysia": ["pendapatan sesaham"]
+  }
+}

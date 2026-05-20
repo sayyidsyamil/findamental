@@ -1,0 +1,7 @@
+{
+  "1155": {"name": "Malayan Banking Berhad", "short_names": ["maybank", "malayan banking"], "sector": "Financial Services"},
+  "5347": {"name": "Tenaga Nasional Berhad", "short_names": ["tenaga", "tnb", "tenaga nasional"], "sector": "Utilities"},
+  "1295": {"name": "Public Bank Berhad", "short_names": ["public bank", "pbb"], "sector": "Financial Services"},
+  "5168": {"name": "Hartalega Holdings Berhad", "short_names": ["hartalega"], "sector": "Healthcare"},
+  "5099": {"name": "AirAsia X Berhad", "short_names": ["airasia x", "airasiax", "aax"], "sector": "Transportation"}
+}

@@ -1,0 +1,11 @@
+{
+  "document_id": "1155_FY_2025_FINANCIAL_STATEMENTS",
+  "ticker": "1155",
+  "company_name": "Malayan Banking Berhad",
+  "source_pdf_path": "/Users/sayyid/Documents/CV/findamental/maybank-ar2025-financial-statements.pdf",
+  "parser": "pymupdf-coordinate-indexer",
+  "indexed_at": "2026-05-20T04:21:02.071804+00:00",
+  "packed_at": "2026-05-20T04:21:02.100228+00:00",
+  "pages": 305,
+  "rows": 5630
+}
