@@ -1,7 +1,7 @@
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import AliasChoices, Field
+from pydantic import AliasChoices, Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     )
 
     TELEGRAM_BOT_TOKEN: str | None = None
-    TELEGRAM_ALLOWED_USER_ID: int | None = Field(
+    TELEGRAM_ALLOWED_USER_ID: str | None = Field(
         default=None,
         validation_alias=AliasChoices("TELEGRAM_ALLOWED_USER_ID", "TELEGRAM_ALLOWED_USERS"),
     )
@@ -41,6 +41,26 @@ class Settings(BaseSettings):
     @property
     def DEMO_FILINGS_DIR(self) -> Path:
         return self.DATA_DIR / "demo_filings"
+
+    @property
+    def TELEGRAM_ALLOWED_USER_IDS(self) -> list[int]:
+        if not self.TELEGRAM_ALLOWED_USER_ID:
+            return []
+        return [
+            int(user_id.strip())
+            for user_id in self.TELEGRAM_ALLOWED_USER_ID.split(",")
+            if user_id.strip()
+        ]
+
+    @field_validator("TELEGRAM_ALLOWED_USER_ID")
+    @classmethod
+    def validate_allowed_user_ids(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        for user_id in value.split(","):
+            if user_id.strip() and not user_id.strip().isdigit():
+                raise ValueError("Telegram allowed users must be comma-separated numeric IDs")
+        return value
 
 
 @lru_cache

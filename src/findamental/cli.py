@@ -9,7 +9,7 @@ from findamental.cache.store import CacheStore, ExtractedFiling, ExtractedLineIt
 from findamental.config import settings
 from findamental.cv.line_item_matcher import LineItemMatcher, parse_numeric_value
 from findamental.maybank_cache import build_maybank_cache
-from findamental.service import FindamentalService
+from findamental.service import FindamentalService, intro_text
 
 
 console = Console()
@@ -17,9 +17,13 @@ console = Console()
 
 def query_main() -> None:
     parser = argparse.ArgumentParser(description="Query the Findamental local cache")
-    parser.add_argument("query")
+    parser.add_argument("query", nargs="*")
     args = parser.parse_args()
-    response = asyncio.run(FindamentalService().answer(args.query))
+    query = " ".join(args.query).strip()
+    if not query:
+        console.print(intro_text())
+        return
+    response = asyncio.run(FindamentalService().answer(query))
     console.print(response.text)
     if response.image_path:
         console.print(f"Image: {response.image_path}")

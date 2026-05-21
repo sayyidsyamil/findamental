@@ -27,6 +27,9 @@ class FindamentalService:
         )
 
     async def answer(self, user_text: str) -> TelegramResponse:
+        if _is_intro_request(user_text):
+            return TelegramResponse(text=intro_text())
+
         parsed = await self.router.parse(user_text)
         if parsed.ticker is None:
             return TelegramResponse(text=_supported_companies(settings.DATA_DIR / "company_index.json"))
@@ -87,6 +90,36 @@ def _supported_companies(company_index_path: Path) -> str:
     lines = ["Company not found. Supported:"]
     lines.extend(f"- {ticker}: {info['name']}" for ticker, info in companies.items())
     return "\n".join(lines)
+
+
+def intro_text() -> str:
+    return (
+        "<b>Hi. I am Findamental.</b>\n"
+        "Ask me Bursa filing questions. I answer with number, page proof, screenshot.\n\n"
+        "<b>Try:</b>\n"
+        "- Maybank operating revenue 2021\n"
+        "- Maybank 2025 ROE\n"
+        "- Maybank FY 2025 total assets\n"
+        "- Maybank FY 2021 diluted earning\n"
+        "- Maybank 2024 cost to income ratio\n\n"
+        "Current report: Maybank FY2025 financial statements."
+    )
+
+
+def _is_intro_request(user_text: str) -> bool:
+    text = user_text.strip().lower()
+    return text in {
+        "",
+        "hi",
+        "hello",
+        "hey",
+        "start",
+        "/start",
+        "help",
+        "/help",
+        "findamental",
+        "/findamental",
+    }
 
 
 def _response_from_resolved_lookup(resolved: ResolvedLookup) -> TelegramResponse:
