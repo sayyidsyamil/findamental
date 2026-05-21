@@ -102,8 +102,8 @@ Current report: Maybank FY2025 financial statements.
 
 ## Limitation handling
 
-- Unknown ticker → return list of supported companies
-- Ambiguous metric → ask for disambiguation
+- Unknown ticker: return list of supported companies
+- Ambiguous metric: ask for disambiguation
 - Period not in cache: return nearest available, note the mismatch
 - Live fetch fails: fall back to "this company isn't in our cache yet"
 - Extraction low confidence: flag in the response
@@ -128,6 +128,22 @@ Supported calculated metrics:
 - Dividend yield
 - Dividend payout
 
+## Visualisation support
+
+If the user asks for a chart, graph, plot, visualise, visualize, trend, bar
+chart, line chart, pie chart, grouped chart, or waterfall chart, use the
+visualisation script after querying the indexed report. Pick the chart type
+from the user's words. Default to `bar` for one metric and `line` for trends.
+
+Run:
+
+```bash
+cd /Users/sayyid/Documents/CV/findamental && /Users/sayyid/.local/bin/uv run python skills/findamental/scripts/visualise.py --query "<financial question without chart words>" --type <bar|line|pie|grouped|waterfall> --output data/findamental_chart.png
+```
+
+Return a short caption and send the generated PNG. If the script prints
+`Chart saved: ...`, send that PNG. Do not mention commands or tool names.
+
 ## Ethical boundary
 
 - No buy/sell recommendations. All valuation outputs labelled as heuristic.
@@ -142,6 +158,9 @@ When this skill is invoked, do not answer from memory. Run:
 ```bash
 cd /Users/sayyid/Documents/CV/findamental && /Users/sayyid/.local/bin/uv run findamental-query "<the user's full financial question>"
 ```
+
+For chart or visualisation requests, run the visualisation command from the
+Visualisation support section instead.
 
 Do not tell the user that a command was run. Do not show the command. Do not
 show tool names. Return only the clean Findamental answer. If the command prints

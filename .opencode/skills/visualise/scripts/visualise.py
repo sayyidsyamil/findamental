@@ -1,13 +1,30 @@
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
 from pathlib import Path
 
 
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
+DEFAULT_UV = Path.home() / ".local" / "bin" / "uv"
+
+
 def parse_number(s: str) -> float:
-    s = s.strip().replace(",", "").replace("(", "-").replace(")", "").replace("RM", "").replace("million", "").strip()
+    s = re.sub(r"<[^>]+>", "", s)
+    s = (
+        s.strip()
+        .replace(",", "")
+        .replace("(", "-")
+        .replace(")", "")
+        .replace("RM", "")
+        .replace("million", "")
+        .replace("sen", "")
+        .replace("%", "")
+        .replace("x", "")
+        .strip()
+    )
     try:
         return float(s)
     except ValueError:
@@ -27,8 +44,11 @@ def parse_key_values(text: str) -> dict[str, float]:
 
 
 def fetch_from_findamental(query: str) -> dict[str, float]:
+    uv = Path(os.environ.get("FINDAMENTAL_UV", DEFAULT_UV))
+    command = [str(uv), "run", "findamental-query", query] if uv.exists() else ["findamental-query", query]
     result = subprocess.run(
-        ["findamental-query", query],
+        command,
+        cwd=PROJECT_ROOT,
         capture_output=True,
         text=True,
     )

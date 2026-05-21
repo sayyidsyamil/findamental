@@ -1,18 +1,24 @@
 import argparse
-import json
+import os
 import re
 import subprocess
 import sys
+from pathlib import Path
 
 
 INCOME_METRICS = {"revenue", "net income", "operating income", "profit", "eps", "earnings"}
 RATIO_METRICS = {"roe", "roa", "margin", "ratio", "return on"}
 BALANCE_METRICS = {"total assets", "total equity", "total liabilities", "equity", "assets"}
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+DEFAULT_UV = Path.home() / ".local" / "bin" / "uv"
 
 
 def run_findamental(query: str) -> str:
+    uv = Path(os.environ.get("FINDAMENTAL_UV", DEFAULT_UV))
+    command = [str(uv), "run", "findamental-query", query] if uv.exists() else ["findamental-query", query]
     result = subprocess.run(
-        ["findamental-query", query],
+        command,
+        cwd=PROJECT_ROOT,
         capture_output=True,
         text=True,
     )
@@ -148,12 +154,12 @@ def main():
     period = info.get("period") or ""
     value = info.get("value") or "?"
 
-    print(f"Available: {company} {metric} {period} — {value}\n")
+    print(f"Available: {company} {metric} {period} - {value}\n")
     print("Suggested charts:")
 
     suggestions = build_suggestions(args.query, info)
     for i, s in enumerate(suggestions, start=1):
-        print(f"{i}. {s['type']:<10} — {s['desc']}")
+        print(f"{i}. {s['type']:<10} - {s['desc']}")
         print(f"             visualise.py {s['args']} --output data/chart.png")
         print()
 
