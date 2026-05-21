@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from findamental.calculations import CalculationInput, CalculationResult, FinancialCalculator
 from findamental.cache.store import CacheStore
 from findamental.config import settings
 from findamental.cv.line_item_matcher import LineItemMatcher
@@ -19,6 +20,7 @@ class FindamentalService:
         self.index_store = DocumentIndexStore()
         self.matcher = LineItemMatcher(settings.DATA_DIR / "line_items_dict.json")
         self.resolver = DocumentResolver(self.matcher)
+        self.calculator = FinancialCalculator()
         self.router = QueryRouter(
             api_key=settings.OPENROUTER_API_KEY,
             company_index_path=settings.DATA_DIR / "company_index.json",
@@ -77,6 +79,9 @@ class FindamentalService:
             company_name="Malayan Banking Berhad",
             document_id="1155_FY_2025_FINANCIAL_STATEMENTS",
         )
+        calculation = self.calculator.calculate(document, user_text, period)
+        if calculation is not None:
+            return _response_from_calculation(calculation)
         resolved = self.resolver.resolve_many(document, user_text, parsed_metric, period)
         if not resolved:
             return None
@@ -99,6 +104,8 @@ def intro_text() -> str:
         "<b>Try:</b>\n"
         "- Maybank operating revenue 2021\n"
         "- Maybank 2025 ROE\n"
+        "- Maybank 2025 PE ratio\n"
+        "- calculate Maybank revenue growth 2025\n"
         "- Maybank FY 2025 total assets\n"
         "- Maybank FY 2021 diluted earning\n"
         "- Maybank 2024 cost to income ratio\n\n"
@@ -124,6 +131,24 @@ def _is_intro_request(user_text: str) -> bool:
 
 def _response_from_resolved_lookup(resolved: ResolvedLookup) -> TelegramResponse:
     return _response_from_resolved_lookups([resolved])
+
+
+def _response_from_calculation(calculation: CalculationResult) -> TelegramResponse:
+    lines = [
+        f"<b>{calculation.company_name} ({calculation.ticker}) - "
+        f"{calculation.scope} {calculation.period}</b>",
+        f"{calculation.metric}: <b>{_format_calculated_value(calculation.value, calculation.unit)}</b>",
+        f"Formula: {calculation.formula}",
+        "Inputs:",
+    ]
+    for item in calculation.inputs:
+        lines.append(
+            f"- {item.label}: {_format_input_value(item)} "
+            f"(page {item.page_number})"
+        )
+    pages = ", ".join(str(page) for page in calculation.source_pages)
+    lines.append(f"Proof: FY 2025 FINANCIAL STATEMENTS, page {pages}")
+    return TelegramResponse(text="\n".join(lines))
 
 
 def _response_from_resolved_lookups(matches: list[ResolvedLookup]) -> TelegramResponse:
@@ -256,6 +281,28 @@ def _format_score(score: float) -> str:
     if clamped.is_integer():
         return f"{int(clamped)}%"
     return f"{clamped:.2f}%".rstrip("0").rstrip(".")
+
+
+def _format_calculated_value(value: float, unit: str) -> str:
+    if unit == "%":
+        return f"{value:,.2f}%"
+    if unit == "x":
+        return f"{value:,.2f}x"
+    return f"{value:,.2f} {unit}".strip()
+
+
+def _format_input_value(item: CalculationInput) -> str:
+    if item.label.lower().startswith("share price"):
+        return f"RM {item.raw_text}"
+    if item.unit == "MYR million":
+        return f"RM {item.raw_text} million"
+    if item.unit == "MYR thousand":
+        return f"RM {item.raw_text} thousand"
+    if item.unit == "sen":
+        return f"{item.raw_text} sen"
+    if item.unit == "%":
+        return f"{item.raw_text}%"
+    return item.raw_text
 
 
 def _display_label(label: str) -> str:

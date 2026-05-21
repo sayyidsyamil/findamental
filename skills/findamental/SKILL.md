@@ -91,6 +91,8 @@ Ask me Bursa filing questions. I answer with number, page proof, screenshot.
 Try:
 - Maybank operating revenue 2021
 - Maybank 2025 ROE
+- Maybank 2025 PE ratio
+- calculate Maybank revenue growth 2025
 - Maybank FY 2025 total assets
 - Maybank FY 2021 diluted earning
 - Maybank 2024 cost to income ratio
@@ -105,6 +107,26 @@ Current report: Maybank FY2025 financial statements.
 - Period not in cache: return nearest available, note the mismatch
 - Live fetch fails: fall back to "this company isn't in our cache yet"
 - Extraction low confidence: flag in the response
+
+## Calculation support
+
+If the user asks for calculated or derived metrics, calculate from indexed PDF
+rows. Show formula and source inputs. Do not use outside market data unless it
+is present in the report.
+
+Supported calculated metrics:
+
+- Revenue growth
+- Asset growth
+- Net profit margin
+- Operating margin
+- Debt to equity
+- Equity ratio
+- Loan to deposit
+- Price to earnings
+- Price to book
+- Dividend yield
+- Dividend payout
 
 ## Ethical boundary
 

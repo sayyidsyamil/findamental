@@ -400,6 +400,9 @@ More examples:
 /findamental Maybank FY 2021 diluted earning
 /findamental Maybank 2025 total assets
 /findamental Maybank 2024 cost to income ratio
+/findamental Maybank 2025 PE ratio
+/findamental calculate Maybank revenue growth 2025
+/findamental calculate Maybank net profit margin 2025
 ```
 
 Expected:
@@ -408,6 +411,12 @@ Expected:
 - Exact number
 - Page proof
 - Highlighted source screenshot
+
+Calculated answers also show:
+
+- Formula
+- Input rows
+- Source pages for each input
 
 ## Normal Workflow After Setup
 
