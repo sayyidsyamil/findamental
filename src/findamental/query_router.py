@@ -24,14 +24,16 @@ class QueryRouter:
         company_index_path: Path,
         synonyms_path: Path,
         model: str = "deepseek/deepseek-v4-flash",
+        base_url: str = "https://openrouter.ai/api/v1",
     ):
         self.api_key = api_key
         self.model = model
+        self.base_url = base_url
         self.company_index = CompanyIndex(company_index_path)
         self.matcher = LineItemMatcher(synonyms_path)
         self.client = (
-            AsyncOpenAI(base_url="https://openrouter.ai/api/v1", api_key=api_key)
-            if api_key
+            AsyncOpenAI(base_url=base_url, api_key=api_key or "not-needed")
+            if (api_key or _is_local_url(base_url))
             else None
         )
 
@@ -93,6 +95,10 @@ class QueryRouter:
             period=period,
             action=action,
         )
+
+
+def _is_local_url(url: str) -> bool:
+    return "localhost" in url or "127.0.0.1" in url or "0.0.0.0" in url
 
 
 def _extract_period(text: str) -> str | None:

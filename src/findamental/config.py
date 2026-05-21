@@ -31,6 +31,9 @@ class Settings(BaseSettings):
     )
     OPENROUTER_API_KEY: str | None = None
     OPENROUTER_MODEL: str = "deepseek/deepseek-v4-flash"
+    LLM_BASE_URL: str = "https://openrouter.ai/api/v1"
+    LLM_MODEL: str | None = None
+    LLM_API_KEY: str | None = None
     DATA_DIR: Path = Field(default=PROJECT_ROOT / "data", validation_alias="FINDAMENTAL_DATA_DIR")
     CACHE_DIR: Path = Field(
         default=PROJECT_ROOT / "data" / "extracted_cache",

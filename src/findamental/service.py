@@ -25,10 +25,11 @@ class FindamentalService:
         self.calculator = FinancialCalculator()
         self.report_manager = AnnualReportManager(index_store=self.index_store)
         self.router = QueryRouter(
-            api_key=settings.OPENROUTER_API_KEY,
+            api_key=settings.LLM_API_KEY or settings.OPENROUTER_API_KEY,
             company_index_path=settings.DATA_DIR / "company_index.json",
             synonyms_path=settings.DATA_DIR / "line_items_dict.json",
-            model=settings.OPENROUTER_MODEL,
+            model=settings.LLM_MODEL or settings.OPENROUTER_MODEL,
+            base_url=settings.LLM_BASE_URL,
         )
 
     async def answer(self, user_text: str) -> TelegramResponse:
