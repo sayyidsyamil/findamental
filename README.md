@@ -442,6 +442,46 @@ hermes gateway stop
 hermes gateway start
 ```
 
+## Reset Demo Memory
+
+Use this before teammate demos if existing Telegram users do not get the clean
+Findamental intro.
+
+macOS or WSL2:
+
+```bash
+cd /path/to/findamental
+make reset-memory
+```
+
+Direct command:
+
+```bash
+bash scripts/reset_findamental_memory.sh
+```
+
+This backs up and clears:
+
+```text
+~/.hermes/state.db Telegram sessions
+~/.hermes/sessions Telegram session files
+~/.hermes/memories/USER.md
+```
+
+It keeps:
+
+```text
+Telegram bot token
+Telegram allowed users
+Findamental PDF index/cache
+```
+
+After reset, ask users to send:
+
+```text
+/findamental
+```
+
 ## Run Tests
 
 macOS or WSL2:

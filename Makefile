@@ -1,4 +1,4 @@
-.PHONY: install extract query test lint
+.PHONY: install extract query test lint reset-memory
 
 UV := $(HOME)/.local/bin/uv
 
@@ -18,3 +18,6 @@ test:
 lint:
 	$(UV) run ruff check src/ tests/ scripts/
 	$(UV) run mypy src/
+
+reset-memory:
+	bash scripts/reset_findamental_memory.sh
