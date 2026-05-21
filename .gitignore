@@ -11,5 +11,6 @@ dist/
 build/
 data/extracted_cache/*.json
 data/extracted_cache/*.png
+data/findamental_chart_*.png
 data/demo_filings/*.pdf
 hermes-agent/
