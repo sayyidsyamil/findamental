@@ -5,5 +5,6 @@
   "5168": {"name": "Hartalega Holdings Berhad", "short_names": ["hartalega"], "sector": "Healthcare"},
   "5099": {"name": "AirAsia X Berhad", "short_names": ["airasia x", "airasiax", "aax"], "sector": "Transportation"},
   "1023": {"name": "CIMB Group Holdings Berhad", "short_names": ["cimb", "cimb group"], "sector": "Financial Services"},
-  "6742": {"name": "YTL Power International Berhad", "short_names": ["ytl power", "ytlpowr", "ytlpower", "ytl power international"], "sector": "Utilities"}
+  "6742": {"name": "YTL Power International Berhad", "short_names": ["ytl power", "ytlpowr", "ytlpower", "ytl power international"], "sector": "Utilities"},
+  "6012": {"name": "Maxis Berhad", "short_names": ["maxis"], "sector": "Telecommunications"}
 }
