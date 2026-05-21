@@ -59,7 +59,7 @@ as low-confidence and surface a warning to the user.
 5. If found: compose text answer + annotated PNG path for Telegram delivery.
 6. If action is "chart": chart_builder can generate a trend PNG.
 7. If action is "valuation": valuation engine computes ratios vs sector median.
-8. If not found: respond with available companies/metrics.
+8. If not found: run the missing-report ingest workflow below.
 
 ## Output format
 
@@ -102,11 +102,59 @@ Current report: Maybank FY2025 financial statements.
 
 ## Limitation handling
 
-- Unknown ticker: return list of supported companies
+- Unknown ticker or uncached report: browse for the annual report, ingest it,
+  then answer from the newly indexed PDF.
 - Ambiguous metric: ask for disambiguation
-- Period not in cache: return nearest available, note the mismatch
-- Live fetch fails: fall back to "this company isn't in our cache yet"
+- Period not in cache: search for that period or annual report before falling
+  back to nearest available.
+- Live fetch fails: say exactly which source was checked and what failed.
 - Extraction low confidence: flag in the response
+
+## Missing Report Ingest Workflow
+
+Use this when the local command says `No hit`, `Need new PDF index`, unknown
+ticker, uncached company, uncached period, or when the user asks for a company
+whose annual financial report is not already indexed.
+
+1. Parse company, year, and report type from the user query.
+2. Browse the internet for the official annual report PDF. Prefer sources in
+   this order:
+   - Company investor relations site
+   - Bursa Malaysia announcement or annual report page
+   - Official annualreports.com mirror only if the two sources above fail
+3. Use precise searches, for example:
+   - `<company name> annual report 2025 PDF`
+   - `<ticker> Bursa Malaysia annual report 2025 PDF`
+   - `<company name> financial statements 2025 PDF`
+4. Verify before download:
+   - PDF belongs to the requested company
+   - PDF year or financial year matches the user request
+   - Source URL is public and traceable
+5. Save the PDF under:
+   `data/demo_filings/<slug>_<year>_annual_report.pdf`
+6. Run the local extraction/indexing pipeline:
+
+```bash
+cd /Users/sayyid/Documents/CV/findamental && /Users/sayyid/.local/bin/uv run python scripts/extract_all_demo_filings.py
+```
+
+7. If generic extraction does not produce enough rows, build a document pack
+   from the PDF using the coordinate indexer path already used by Findamental.
+   The required outputs are:
+   - `data/document_index/<document_id>.json`
+   - `data/document_pack/<document_id>/report.txt`
+   - `data/document_pack/<document_id>/report.md`
+   - `data/document_pack/<document_id>/tables.json`
+   - `data/document_pack/<document_id>/layout.json`
+8. Re-run the user's original query against the new index.
+9. Answer only with the verified figures, pages, and source image. Do not
+   mention browsing, commands, tools, or implementation details.
+10. If no official PDF can be found, say:
+   `No official annual report found yet. Checked: <sources>.`
+
+Never fabricate values during ingest. If OCR/indexing fails, say `Report found,
+but extraction failed`, give the PDF source, and ask whether to try another
+source.
 
 ## Calculation support
 
@@ -161,6 +209,9 @@ cd /Users/sayyid/Documents/CV/findamental && /Users/sayyid/.local/bin/uv run fin
 
 For chart or visualisation requests, run the visualisation command from the
 Visualisation support section instead.
+
+If the local command says the report is missing, do not stop. Follow the
+Missing Report Ingest Workflow, then re-run the original query.
 
 Do not tell the user that a command was run. Do not show the command. Do not
 show tool names. Return only the clean Findamental answer. If the command prints

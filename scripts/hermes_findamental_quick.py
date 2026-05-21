@@ -86,6 +86,12 @@ def query(text: str) -> int:
         print("No result.")
         return result.returncode or 1
 
+    if "Need new PDF index" in output or "Cached metrics: none yet" in output:
+        print("Report not indexed yet.")
+        print("Use full ingest mode so I can browse, download the annual report, OCR it, then answer.")
+        print(f"Ask without the slash command: findamental ingest {text}")
+        return 1
+
     media_path = _media_path_from_output(output)
     clean = re.sub(r"\n?Image:\s*.+", "", output).strip()
     print(clean)
