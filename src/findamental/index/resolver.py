@@ -79,6 +79,8 @@ def _row_score(
         phrases = matcher.synonyms.get(parsed_metric, [])
         if phrases:
             score = max(score, max(float(fuzz.token_set_ratio(label, phrase)) for phrase in phrases))
+            if any(label == phrase or label.startswith(phrase) for phrase in phrases):
+                score += 25.0
     return score
 
 

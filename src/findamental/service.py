@@ -242,7 +242,41 @@ def _shape_lookup_matches(
         if primary:
             return _limit_matches(_dedupe_financial_cells(_prefer_revenue_rows(primary)), 8)
 
+    if parsed_metric == "net_income" and _is_plain_net_profit_query(user_text):
+        primary = [match for match in valued if _is_primary_net_profit_match(match)]
+        if primary:
+            return _limit_matches(_dedupe_financial_cells(primary), 8)
+
     return _limit_matches(_dedupe_financial_cells(valued), 12)
+
+
+def _is_plain_net_profit_query(user_text: str) -> bool:
+    text = _norm(user_text)
+    has_net_profit = "net profit" in text or "profit for" in text or "net income" in text
+    if not has_net_profit:
+        return False
+    noisy_terms = {"segment", "before tax", "before taxation", "gain on", "loss on"}
+    return not any(term in text for term in noisy_terms)
+
+
+def _is_primary_net_profit_match(match: ResolvedLookup) -> bool:
+    label = _norm(match.row.label)
+    if label in {
+        "net profit",
+        "profit for the year",
+        "profit for the financial year",
+        "profit for the period",
+        "profit attributable to owners",
+        "profit attributable to equity holders",
+        "profit attributable to equity holders of the bank",
+        "profit attributable to equity holders of the parent",
+    }:
+        return True
+    if label.startswith("profit for the"):
+        return True
+    if label.startswith("profit attributable"):
+        return True
+    return False
 
 
 def _is_plain_revenue_query(user_text: str) -> bool:
@@ -441,6 +475,9 @@ def _infer_unit(label: str, section: str | None = None, unit_hint: str | None = 
 
 def _format_cell_value(cell: IndexedCell, unit: str) -> str:
     raw = _clean_number_text(cell.text)
+    value = cell.value
+    if unit == "MYR million" and value is not None and abs(value) >= 1_000_000:
+        unit = "MYR thousand"
     if unit == "sen":
         return f"{raw} sen"
     if unit == "%":

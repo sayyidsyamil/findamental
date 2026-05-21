@@ -191,9 +191,9 @@ def _unit_hint_from_text(text: str) -> str | None:
         return "MYR million"
     if "rm'000" in normalized or "rm '000" in normalized or "rm000" in normalized:
         return "MYR thousand"
-    if "sen" in normalized:
+    if re.search(r"\bsen\b", normalized):
         return "sen"
-    if "(%)" in normalized or "ratio" in normalized:
+    if "(%)" in normalized or re.search(r"\bratio\b", normalized):
         return "%"
     return None
 
