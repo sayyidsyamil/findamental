@@ -12,5 +12,7 @@ build/
 data/extracted_cache/*.json
 data/extracted_cache/*.png
 data/findamental_chart_*.png
+data/document_index/*.json
+data/document_pack/*/
 data/demo_filings/*.pdf
 hermes-agent/

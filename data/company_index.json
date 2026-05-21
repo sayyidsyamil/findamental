@@ -3,5 +3,7 @@
   "5347": {"name": "Tenaga Nasional Berhad", "short_names": ["tenaga", "tnb", "tenaga nasional"], "sector": "Utilities"},
   "1295": {"name": "Public Bank Berhad", "short_names": ["public bank", "pbb"], "sector": "Financial Services"},
   "5168": {"name": "Hartalega Holdings Berhad", "short_names": ["hartalega"], "sector": "Healthcare"},
-  "5099": {"name": "AirAsia X Berhad", "short_names": ["airasia x", "airasiax", "aax"], "sector": "Transportation"}
+  "5099": {"name": "AirAsia X Berhad", "short_names": ["airasia x", "airasiax", "aax"], "sector": "Transportation"},
+  "1023": {"name": "CIMB Group Holdings Berhad", "short_names": ["cimb", "cimb group"], "sector": "Financial Services"},
+  "6742": {"name": "YTL Power International Berhad", "short_names": ["ytl power", "ytlpowr", "ytlpower", "ytl power international"], "sector": "Utilities"}
 }

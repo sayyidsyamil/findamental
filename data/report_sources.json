@@ -1,0 +1,32 @@
+{
+  "1023": {
+    "latest_year": 2024,
+    "reports": {
+      "2024": {
+        "type": "annual_report",
+        "url": "https://www.cimb.com/content/dam/cimb/group/documents/investor-relations/annual-reports/2024/cimb-integrated-report-2024.pdf",
+        "source": "CIMB investor relations"
+      }
+    }
+  },
+  "5347": {
+    "latest_year": 2024,
+    "reports": {
+      "2024": {
+        "type": "annual_report",
+        "url": "https://www.tnb.com.my/assets/annual_report/TNB_IAR_2024.pdf",
+        "source": "Tenaga Nasional annual reports"
+      }
+    }
+  },
+  "6742": {
+    "latest_year": 2025,
+    "reports": {
+      "2025": {
+        "type": "annual_report",
+        "url": "https://www.ytl.com/wp-content/uploads/ytles/sites/2/files/annual-report/YTL_Power_AR_2025.pdf",
+        "source": "YTL Corporation financial reports"
+      }
+    }
+  }
+}

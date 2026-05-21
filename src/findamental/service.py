@@ -1,4 +1,5 @@
 from pathlib import Path
+import re
 
 from findamental.calculations import CalculationInput, CalculationResult, FinancialCalculator
 from findamental.cache.store import CacheStore
@@ -7,11 +8,12 @@ from findamental.cv.line_item_matcher import LineItemMatcher
 from findamental.index.models import IndexedCell
 from findamental.index.resolver import DocumentResolver, ResolvedLookup
 from findamental.index.store import DocumentIndexStore
-from findamental.maybank_cache import FILING_TYPE, maybank_pdf_path
+from findamental.maybank_cache import maybank_pdf_path
 from findamental.output.response_builder import build_lookup_response
 from findamental.output.telegram_response import TelegramResponse
 from findamental.query_router import QueryRouter
 from findamental.maybank_cache import ensure_maybank_cache
+from findamental.reports import AnnualReportManager
 
 
 class FindamentalService:
@@ -21,6 +23,7 @@ class FindamentalService:
         self.matcher = LineItemMatcher(settings.DATA_DIR / "line_items_dict.json")
         self.resolver = DocumentResolver(self.matcher)
         self.calculator = FinancialCalculator()
+        self.report_manager = AnnualReportManager(index_store=self.index_store)
         self.router = QueryRouter(
             api_key=settings.OPENROUTER_API_KEY,
             company_index_path=settings.DATA_DIR / "company_index.json",
@@ -41,6 +44,15 @@ class FindamentalService:
             if indexed_response is not None:
                 return indexed_response
             ensure_maybank_cache(self.store)
+        else:
+            indexed_response = self._answer_from_annual_report(
+                parsed.ticker,
+                user_text,
+                parsed.metric,
+                parsed.period,
+            )
+            if indexed_response is not None:
+                return indexed_response
 
         item = self.store.find_line_item(parsed.ticker, parsed.metric, parsed.period)
         if item is None:
@@ -55,7 +67,7 @@ class FindamentalService:
                     f"Ticker: {parsed.ticker}\n"
                     f"Metric: {parsed.metric}\n"
                     f"Cached metrics: {metric_text}\n"
-                    "Need new PDF index. Run: make extract"
+                    "Report not indexed yet. I need full ingest mode to fetch the annual report."
                 )
             )
 
@@ -63,6 +75,36 @@ class FindamentalService:
         if filing is None:
             return TelegramResponse(text="Hit found. Source filing missing.")
         return build_lookup_response(filing, item, settings.CACHE_DIR)
+
+    def _answer_from_annual_report(
+        self,
+        ticker: str,
+        user_text: str,
+        parsed_metric: str | None,
+        period: str | None,
+    ) -> TelegramResponse | None:
+        try:
+            document = self.report_manager.ensure_indexed_report(ticker, period)
+        except Exception as exc:
+            return TelegramResponse(text=f"Report ingest failed: {exc}")
+        if document is None:
+            return None
+        calculation = self.calculator.calculate(document, user_text, period)
+        if calculation is not None:
+            return _response_from_calculation(calculation)
+        resolved = self.resolver.resolve_many(document, user_text, parsed_metric, period)
+        if not resolved and period is not None:
+            resolved = self.resolver.resolve_many(document, user_text, parsed_metric, None)
+        resolved = _shape_lookup_matches(resolved, parsed_metric, user_text)
+        if not resolved:
+            return TelegramResponse(
+                text=(
+                    f"Report indexed.\n"
+                    f"Company: {document.company_name} ({document.ticker})\n"
+                    f"Metric not found: {parsed_metric or user_text}"
+                )
+            )
+        return _response_from_resolved_lookups(resolved)
 
     def _answer_from_document_index(
         self,
@@ -83,6 +125,7 @@ class FindamentalService:
         if calculation is not None:
             return _response_from_calculation(calculation)
         resolved = self.resolver.resolve_many(document, user_text, parsed_metric, period)
+        resolved = _shape_lookup_matches(resolved, parsed_metric, user_text)
         if not resolved:
             return None
         return _response_from_resolved_lookups(resolved)
@@ -94,6 +137,10 @@ def _supported_companies(company_index_path: Path) -> str:
     companies = json.loads(company_index_path.read_text(encoding="utf-8"))
     lines = ["Company not found. Supported:"]
     lines.extend(f"- {ticker}: {info['name']}" for ticker, info in companies.items())
+    lines.append(
+        "\nIf it is a Bursa company not listed here, add it to data/company_index.json and "
+        "Findamental can ingest its annual report on demand."
+    )
     return "\n".join(lines)
 
 
@@ -106,10 +153,13 @@ def intro_text() -> str:
         "- Maybank 2025 ROE\n"
         "- Maybank 2025 PE ratio\n"
         "- calculate Maybank revenue growth 2025\n"
+        "- CIMB revenue 2024\n"
+        "- Tenaga revenue 2024\n"
+        "- YTLPOWR revenue\n"
         "- Maybank FY 2025 total assets\n"
         "- Maybank FY 2021 diluted earning\n"
         "- Maybank 2024 cost to income ratio\n\n"
-        "Current report: Maybank FY2025 financial statements."
+        "Current mode: on-demand annual report ingest plus local document search."
     )
 
 
@@ -167,7 +217,7 @@ def _response_from_resolved_lookups(matches: list[ResolvedLookup]) -> TelegramRe
                 f"{index}. <b>{match.document.company_name} ({match.document.ticker}) - "
                 f"{_period_label(match)}</b>\n"
                 f"{_display_label(match.row.label)}: <b>{_format_cell_value(match.cell, unit)}</b>\n"
-                f"Proof: {FILING_TYPE.replace('_', ' ')}, page {match.row.page_number} | "
+                f"Proof: {_source_label(match.document)}, page {match.row.page_number} | "
                 f"Score: {_format_score(match.score)}"
             )
         text = "\n".join(lines)
@@ -176,6 +226,124 @@ def _response_from_resolved_lookups(matches: list[ResolvedLookup]) -> TelegramRe
         image_path=image_paths[0] if image_paths else None,
         image_paths=image_paths,
     )
+
+
+def _shape_lookup_matches(
+    matches: list[ResolvedLookup],
+    parsed_metric: str | None,
+    user_text: str,
+) -> list[ResolvedLookup]:
+    valued = [match for match in matches if match.cell.value is not None]
+    if not valued:
+        return []
+
+    if parsed_metric == "revenue" and _is_plain_revenue_query(user_text):
+        primary = [match for match in valued if _is_primary_revenue_match(match)]
+        if primary:
+            return _limit_matches(_dedupe_financial_cells(_prefer_revenue_rows(primary)), 8)
+
+    return _limit_matches(_dedupe_financial_cells(valued), 12)
+
+
+def _is_plain_revenue_query(user_text: str) -> bool:
+    text = _norm(user_text)
+    noisy_revenue_terms = {
+        "growth",
+        "recognised",
+        "recognized",
+        "contract",
+        "segment",
+        "insurance",
+        "disaggregation",
+    }
+    return "revenue" in text and not any(term in text for term in noisy_revenue_terms)
+
+
+def _is_primary_revenue_match(match: ResolvedLookup) -> bool:
+    label = _norm(match.row.label)
+    section = _norm(match.row.section or "")
+    if label in {
+        "revenue",
+        "total revenue",
+        "operating revenue",
+        "gross revenue",
+        "revenue from contracts with customers",
+    }:
+        return True
+    if label.startswith("total revenue"):
+        return True
+    if label == "total" and "revenue" in section:
+        return True
+    return False
+
+
+def _prefer_revenue_rows(matches: list[ResolvedLookup]) -> list[ResolvedLookup]:
+    million_rows = [match for match in matches if match.row.unit_hint == "MYR million"]
+    candidates = million_rows or matches
+    deduped = _dedupe_financial_cells(candidates)
+    max_value = max(abs(match.cell.value or 0.0) for match in deduped)
+    if max_value <= 0:
+        return deduped
+    consolidated_scale = [
+        match
+        for match in deduped
+        if abs(match.cell.value or 0.0) >= max_value * 0.8
+        or _norm(match.row.label).startswith("total revenue")
+    ]
+    return consolidated_scale or deduped
+
+
+def _dedupe_financial_cells(matches: list[ResolvedLookup]) -> list[ResolvedLookup]:
+    best_by_slot: dict[tuple[str, int, str, str | None, str | None], ResolvedLookup] = {}
+    for match in matches:
+        key = (
+            match.document.document_id,
+            match.row.page_number,
+            _norm(match.row.label),
+            match.cell.column,
+            match.cell.scope,
+        )
+        existing = best_by_slot.get(key)
+        if existing is None or _financial_cell_rank(match) > _financial_cell_rank(existing):
+            best_by_slot[key] = match
+
+    unique: list[ResolvedLookup] = []
+    seen_values: set[tuple[str, str, str | None, str | None, str]] = set()
+    for match in sorted(
+        best_by_slot.values(),
+        key=lambda item: (-item.score, item.row.page_number, _norm(item.row.label)),
+    ):
+        value_key = (
+            match.document.document_id,
+            _norm(match.row.label),
+            match.cell.column,
+            match.cell.scope,
+            _clean_number_text(match.cell.text),
+        )
+        if value_key in seen_values:
+            continue
+        seen_values.add(value_key)
+        unique.append(match)
+    return unique
+
+
+def _financial_cell_rank(match: ResolvedLookup) -> tuple[float, float]:
+    value = match.cell.value or 0.0
+    text = match.cell.text.strip()
+    note_penalty = -1000.0 if abs(value) < 100 and re_fullmatch_int(text) else 0.0
+    return (note_penalty + abs(value), match.score)
+
+
+def re_fullmatch_int(text: str) -> bool:
+    return bool(re.fullmatch(r"\(?\d{1,2}\)?", text.replace(",", "")))
+
+
+def _norm(text: str) -> str:
+    return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
+
+
+def _limit_matches(matches: list[ResolvedLookup], limit: int) -> list[ResolvedLookup]:
+    return matches[:limit]
 
 
 def _image_paths_for_matches(matches: list[ResolvedLookup]) -> list[Path]:
@@ -229,16 +397,28 @@ def _text_for_match(resolved: ResolvedLookup) -> str:
     return (
         f"<b>{resolved.document.company_name} ({resolved.document.ticker}) - {period}</b>\n"
         f"{label}: <b>{_format_cell_value(resolved.cell, unit)}</b>\n"
-        f"Proof: {FILING_TYPE.replace('_', ' ')}, page {resolved.row.page_number}\n"
+        f"Proof: {_source_label(resolved.document)}, page {resolved.row.page_number}\n"
         f"Score: {_format_score(resolved.score)}"
     )
 
 
+def _source_label(document) -> str:
+    return document.document_id.replace("_", " ")
+
+
 def _infer_unit(label: str, section: str | None = None, unit_hint: str | None = None) -> str:
-    if unit_hint:
-        return unit_hint
     lowered = label.lower()
     section_text = (section or "").lower()
+    if unit_hint in {"MYR million", "MYR thousand", "MYR"}:
+        return unit_hint
+    if "revenue" in lowered:
+        return "MYR million"
+    if lowered == "total" and "revenue" in section_text:
+        return "MYR million"
+    if unit_hint and not (
+        unit_hint in {"sen", "%"} and any(term in lowered for term in {"asset", "revenue", "income", "profit"})
+    ):
+        return unit_hint
     if "sen" in lowered or "earning" in lowered or "per share" in lowered or "dividend" in lowered:
         return "sen"
     if "share price" in lowered:
@@ -315,7 +495,11 @@ def _display_label(label: str) -> str:
 
 def _period_label(resolved: ResolvedLookup) -> str:
     period = resolved.period or "matched period"
-    return f"{resolved.cell.scope} {period}" if resolved.cell.scope else period
+    if resolved.cell.scope == "Group":
+        return f"Group {period}"
+    if resolved.cell.scope == "Bank" and resolved.document.ticker == "1155":
+        return f"Bank {period}"
+    return period
 
 
 def _slug(text: str) -> str:

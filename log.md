@@ -39,11 +39,25 @@
   - run OCR/indexing
   - re-run the original query
   - answer only with verified source-backed results
+- Added on-demand annual report ingest for configured non-Maybank companies:
+  - CIMB Group Holdings Berhad (`1023`)
+  - Tenaga Nasional Berhad (`5347`)
+  - YTL Power International Berhad (`6742`, alias `YTLPOWR`)
+- Added `data/report_sources.json` for official annual report PDF sources.
+- Fixed revenue lookup quality:
+  - plain `revenue` queries now prefer exact revenue rows
+  - note numbers are no longer returned as values
+  - small segment revenue rows are skipped unless the user asks for segment revenue
+  - RM million summary rows are preferred when available
+- Tested clean Hermes quick-command output for:
+  - `CIMB revenue 2024`
+  - `Tenaga revenue 2024`
+  - `YTLPOWR revenue`
 
 ## Current Limits
 
-- The clean `/findamental` quick command is fast and quiet, but it cannot browse.
-- Missing annual report ingest requires full Hermes skill mode because browsing
-  and downloading need the agent tool loop.
-- Generic non-Maybank annual report extraction may need manual tuning if the PDF
-  layout is unusual or OCR quality is poor.
+- The clean `/findamental` quick command can download and index configured
+  report URLs. Fully unknown Bursa companies still need a company-index entry
+  or full Hermes skill mode to discover the correct official PDF.
+- Generic annual report extraction may need manual tuning if the PDF layout is
+  unusual or OCR quality is poor.
