@@ -1,4 +1,4 @@
-from pathlib import Path
+﻿from pathlib import Path
 import re
 
 from findamental.calculations import CalculationInput, CalculationResult, FinancialCalculator
@@ -316,16 +316,33 @@ def _prefer_revenue_rows(matches: list[ResolvedLookup]) -> list[ResolvedLookup]:
     million_rows = [match for match in matches if match.row.unit_hint == "MYR million"]
     candidates = million_rows or matches
     deduped = _dedupe_financial_cells(candidates)
-    max_value = max(abs(match.cell.value or 0.0) for match in deduped)
-    if max_value <= 0:
+
+    groups: dict[tuple, list[ResolvedLookup]] = {}
+    for match in deduped:
+        row_key = (
+            match.document.document_id,
+            match.row.page_number,
+            _norm(match.row.label),
+        )
+        groups.setdefault(row_key, []).append(match)
+
+    row_maxes = {}
+    global_max = 0.0
+    for key, group in groups.items():
+        row_max = max(abs(m.cell.value or 0.0) for m in group)
+        row_maxes[key] = row_max
+        global_max = max(global_max, row_max)
+
+    if global_max <= 0:
         return deduped
-    consolidated_scale = [
-        match
-        for match in deduped
-        if abs(match.cell.value or 0.0) >= max_value * 0.8
-        or _norm(match.row.label).startswith("total revenue")
-    ]
-    return consolidated_scale or deduped
+
+    kept: list[ResolvedLookup] = []
+    for key, group in groups.items():
+        label = key[2]
+        if row_maxes[key] >= global_max * 0.8 or label.startswith("total revenue"):
+            kept.extend(group)
+
+    return kept or deduped
 
 
 def _dedupe_financial_cells(matches: list[ResolvedLookup]) -> list[ResolvedLookup]:
@@ -491,7 +508,7 @@ def _format_cell_value(cell: IndexedCell, unit: str) -> str:
 
 
 def _clean_number_text(text: str) -> str:
-    return text.strip().replace("−", "-")
+    return text.strip().replace("âˆ’", "-")
 
 
 def _format_score(score: float) -> str:
@@ -544,3 +561,4 @@ def _slug(text: str) -> str:
     import re
 
     return re.sub(r"[^a-z0-9]+", "_", text.lower()).strip("_")[:80]
+

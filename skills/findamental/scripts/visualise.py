@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import json
 import os
 import re
@@ -57,21 +57,26 @@ def fetch_from_findamental(query: str) -> dict[str, float]:
         print("No data returned from findamental-query. Check the query or cache.")
         sys.exit(1)
 
-    value_match = re.search(r":\s*<b>(.+?)</b>", output)
-    metric_match = re.search(r"</b>\n(.+?):", output)
-    period_match = re.search(r"\(.*?\)\s*-\s*(.+?)</b>", output)
+    data: dict[str, float] = {}
+    current_period: str | None = None
 
-    label = "Value"
-    if metric_match:
-        label = metric_match.group(1).strip()
-    if period_match:
-        label = f"{label} ({period_match.group(1).strip()})"
+    for line in output.splitlines():
+        bold_header = re.search(r"<b>.*?- (.+?)</b>", line)
+        if bold_header:
+            current_period = bold_header.group(1).strip()
 
-    if value_match:
-        raw = value_match.group(1).strip()
-        num = parse_number(raw)
-        return {label: num}
+        value_match = re.search(r":\s*<b>(.+?)</b>", line)
+        if value_match and current_period:
+            label_match = re.match(r"([^:\n]+?)\s*:", line)
+            label = label_match.group(1).strip() if label_match else "Value"
+            raw = value_match.group(1).strip()
+            num = parse_number(raw)
+            if num != 0.0 or any(c.isdigit() for c in raw):
+                key = f"{label} ({current_period})"
+                data[key] = num
 
+    if data:
+        return data
     return parse_key_values(output)
 
 
