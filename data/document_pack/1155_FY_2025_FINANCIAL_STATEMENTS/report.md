@@ -68,9 +68,9 @@ Financial Statements
 
 | Label | Values |
 |---|---|
+| OUR PERFORMANCE | ?: 66th |
 | Ballroom, Level | Group FY_2026: 3, |
 | No. | ?: 8,<br>Group FY_2026: 2 |
-| Thursday, | ?: 30<br>Group FY_2026: 2026 |
 
 ## Page 3
 
@@ -169,8 +169,9 @@ HIGHLIGHTS OF 2025
 |---|---|
 | Annual Report | FY_2025: 2025 |
 | HIGHLIGHTS OF | FY_2025: 2025 |
-| Group | ?: CET1 |
-| GROWTH | ?: 72.4%<br>FY_2025: 6.0% |
+| DELIVERED | ?: (FY2024:<br>?: RM1.08<br>?: (FY2024:<br>?: RM10.09 |
+| FINANCIAL Group | ?: CET1 |
+| GROWTH Ratio* Share | ?: 72.4%<br>FY_2025: 6.0% |
 | economic growth by facilitating over | ?: RM15 |
 | in financing and investments into Johor-Singapore increase of | ?: 12.6% |
 | Special Economic Zone (“JS-SEZ”). | ?: RM252.04 |
@@ -974,9 +975,9 @@ FINANCIAL PERFORMANCE
 |---|---|
 | Annual Report | Group FY_2025: 2025 |
 | As at | ?: 23.6%<br>?: 24.4% |
-| As at | ?: 4.2% |
+| As at | ?: 3.8%<br>?: 4.2% |
 | RM’ million | ?: Q1<br>?: Q2<br>Group FY_2025: Q3<br>?: Q4 |
-| Operating revenue | ?: 16,874<br>?: 17,079<br>Group FY_2025: 16,602<br>?: 15,814<br>?: 66,369 |
+| Operating revenue | ?: 16,874<br>?: 17,079<br>Group FY_2025: 16,602<br>Group FY_2025: 15,814<br>?: 66,369 |
 | Net interest income (including income from Islamic Banking Scheme operations) | ?: 5,287<br>?: 5,382<br>Group FY_2025: 5,361<br>?: 5,780<br>?: 21,810 |
 | Insurance/takaful service result | ?: 471<br>?: 395<br>Group FY_2025: 305<br>?: 585<br>?: 1,756 |
 | Other operating income | ?: 2,100<br>?: 2,679<br>Group FY_2025: 2,745<br>?: 1,496<br>?: 9,020 |
@@ -987,7 +988,7 @@ FINANCIAL PERFORMANCE
 | Earnings per share (sen) | ?: 21.5<br>?: 21.8<br>Group FY_2025: 21.7<br>?: 22.2<br>?: 87.1 |
 | Dividend per share (sen) – | ?: 30.0<br>?: 33.0<br>?: 63.0 |
 | RM’ million | ?: Q1<br>?: Q2<br>Group FY_2025: Q3<br>?: Q4 |
-| Operating revenue | ?: 18,347<br>?: 17,172<br>Group FY_2025: 16,688<br>?: 16,736<br>?: 68,943 |
+| Operating revenue | ?: 18,347<br>?: 17,172<br>Group FY_2025: 16,688<br>Group FY_2025: 16,736<br>?: 68,943 |
 | Net interest income (including income from Islamic Banking Scheme operations) | ?: 5,244<br>?: 5,322<br>Group FY_2025: 5,218<br>?: 5,370<br>?: 21,154 |
 | Insurance/takaful service result | ?: 182<br>?: 468<br>Group FY_2025: 282<br>?: 353<br>?: 1,285 |
 | Other operating income | ?: 2,868<br>?: 2,244<br>Group FY_2025: 2,002<br>?: 1,952<br>?: 9,066 |
@@ -1369,14 +1370,11 @@ FINANCIAL PERFORMANCE
 | Annual Report | FY_2025: 2025 |
 | SEGMENTAL INFORMATION FY | FY_2025: 31<br>FY_2024: 2024<br>FY_2025: 31<br>FY_2025: 2025 |
 | eliminated on consolidation of | FY_2024: RM9,641<br>FY_2025: 31 |
-| December | FY_2025: 2025<br>FY_2025: RM8,645<br>FY_2025: 31 |
 | which are eliminated on consolidation of | FY_2024: RM7,220 |
 | December | FY_2025: 2024. |
 | Group Global Banking | ?: +7.7% |
 | Head Office & Others of | FY_2025: RM188 |
-| million for FY | FY_2024: 31<br>FY_2025: 2025 |
 | Group Global Banking | ?: +13.0% |
-| December | FY_2024: 2024. |
 | * The figures as at | ?: 31<br>?: 2024<br>FY_2025: 31<br>FY_2025: 2025. |
 | ** Amount less than | ?: RM1,000. |
 
@@ -3270,16 +3268,15 @@ INDEX TO THE FINANCIAL STATEMENTS
 | Consolidated statement of changes in equity | ?: 31 |
 | Statement of changes in equity | ?: 33 |
 | Statements of cash flows | ?: 34 |
-| but not yet effective | ?: 62 |
+| but not yet effective | ?: 62<br>?: 38.<br>?: 144 |
 | agreements | ?: 69 |
-| through profit or loss (“FVTPL”) | ?: 71 |
+| through profit or loss (“FVTPL”) | ?: 71<br>?: 44. |
 | advances, financing and other debts, net | ?: 153 |
 | financial investments, net | ?: 153 |
 | comprehensive income (“FVOCI”) | ?: 73 |
 | assets and investment in associate/subsidiary, net | ?: 154 |
 | reinsurance contract/retakaful certificate assets/liabilities | ?: 93 |
 | connected parties | ?: 161 |
-| of insurance and takaful business | ?: 248 |
 
 ## Page 30
 
@@ -3884,6 +3881,7 @@ FOR THE FINANCIAL YEAR ENDED 31 DECEMBER 2025
 | Paid – Second interim for the financial year ended | ?: 31<br>?: 2023<br>?: 51<br>Bank FY_2024: 31.00 |
 | Declared – Second interim for the financial year ended | ?: 31 |
 | Declared – Second interim for the financial year ended | ?: 31 |
+| The accompanying notes form an integral part of the financial statements. | Bank FY_2024: 29 |
 
 ## Page 32
 
@@ -6164,7 +6162,7 @@ Annual Report 2025
 | Label | Values |
 |---|---|
 | Annual Report | Group FY_2025: 2025 |
-| Note | ?: 19(iv). |
+| recognised in other comprehensive income to income Note | ?: 19(iv). |
 | disclosed in Note | ?: 18 |
 | controlled structured entities are disclosed in Notes | ?: 64(a) |
 
@@ -6556,8 +6554,8 @@ Our Performance
 | Label | Values |
 |---|---|
 | • Amortised cost, as explained in Note | ?: 2.3(v)(b)(1); |
-| Note | ?: 2.3(v)(b)(2); |
-| under MFRS | ?: 9. |
+| Note | ?: 2.3(v)(b)(2);<br>?: (3) |
+| at amortised cost if both of the following conditions under MFRS | ?: 9. |
 
 ## Page 43
 
@@ -7466,10 +7464,10 @@ Annual Report 2025
 | Annual Report | FY_2025: 2025 |
 | Buildings on freehold land | ?: 50 |
 | which the Group and the Bank purchase with a commitment Buildings on leasehold land | ?: 50 |
-| Office furniture, fittings, equipments | ?: 10%<br>?: 33% |
+| investment of depositors’ funds/Islamic Banking Funds’ and is Office furniture, fittings, equipments | ?: 10%<br>?: 33% |
 | Computers and peripherals | ?: 10%<br>?: 50% |
 | Electrical and security equipments | ?: 10%<br>?: 33% |
-| Motor vehicles | ?: 12%<br>?: 33% |
+| sell from its portfolio, with a commitment to repurchase at Motor vehicles | ?: 12%<br>?: 33% |
 | of the Bank are disclosed in Note | FY_2025: 20. |
 | respective leases which ranges from | ?: 30<br>?: 999 |
 | remaining period of respective leases ranges from | ?: 6<br>?: 991 |
@@ -8356,11 +8354,11 @@ Our Performance
 
 | Label | Values |
 |---|---|
-| • Level | ?: 1 |
+| comprises of finance income or expense from • Level | ?: 1 |
 | • Level | ?: 2 |
 | • Level | ?: 3 |
 | properties and financial liabilities at FVTPL, at fair value at Note | ?: 54(c). |
-| fair value are disclosed in Note | ?: 54(g). |
+| asset or paid to transfer a liability in an orderly transaction fair value are disclosed in Note | ?: 54(g). |
 
 ## Page 57
 
@@ -8478,6 +8476,10 @@ Annual Report 2025
 | Label | Values |
 |---|---|
 | Annual Report | FY_2025: 2025 |
+| financing are recognised in the income statements under the | ?: (3) |
+| expense/profit distributed to depositors over the relevant | ?: (1) |
+| recognised using the rate of interest/profit used to discount | ?: (3) |
+| Islamic banking business are recognised on an accrual | ?: (4) |
 
 ## Page 58
 
@@ -8592,7 +8594,7 @@ Our Performance
 | more than three | ?: (3)<br>?: RM213.2<br>?: (2024: |
 | the Bank ranging from one | ?: (1)<br>?: (3) |
 | and more than three | ?: (3)<br>?: RM165.5 |
-| in Note | ?: 26(i). |
+| are not expected to be settled wholly before twelve in Note | ?: 26(i). |
 | Note | ?: 2.3(xxv)(d), |
 
 ## Page 59
@@ -8714,7 +8716,7 @@ Annual Report 2025
 | Label | Values |
 |---|---|
 | Annual Report | FY_2025: 2025 |
-| within one | ?: (1) |
+| participating Maybank Group excluding dormant within one | ?: (1) |
 | disclosed in Note | ?: 32(b). |
 
 ## Page 60
@@ -8830,12 +8832,13 @@ Our Performance
 | Label | Values |
 |---|---|
 | unexpected events that give rise to the possibility of an The Group disclosed its segment information in Note | ?: 60. |
-| measured in accordance with MFRS | ?: 9 |
+| benefits are probable but not virtually certain. measured in accordance with MFRS | ?: 9 |
 | disclosed, unless the probability of outflow of economic are fulfilled in accordance with MFRS | ?: 120 |
+| earnings per share (“EPS”) for profit or loss from continuing On | ?: 1<br>?: 2025, |
 | financial year. Amendments to MFRS | ?: 121 |
-| – Lack of Exchangeability | ?: 1<br>?: 2025 |
-| Amendments to MFRS | ?: 121 |
-| beginning on or after | ?: 1<br>?: 2025, |
+| attributable to equity holders of the Bank by the weighted – Lack of Exchangeability | ?: 1<br>?: 2025 |
+| financial year, which has been adjusted for the effects of Amendments to MFRS | ?: 121 |
+| with the internal reporting provided to the chief operating beginning on or after | ?: 1<br>?: 2025, |
 
 ## Page 61
 
@@ -8973,7 +8976,7 @@ Annual Report 2025
 | amounts of income, expenses, assets, liabilities, the accompanying (Notes | ?: 12,<br>?: 26<br>?: 44) |
 | Therefore, the financial statements continue to be prepared on the The Group’s and the Bank’s ECL calculations under MFRS | FY_2025: 9 |
 | (Notes | ?: 10,<br>?: 11<br>?: 45) |
-| As the current MFRS | ?: 9 |
+| risks involved significant level of judgement and reflect the As the current MFRS | ?: 9 |
 | FVTPL (Notes | ?: 8<br>?: 9), |
 | derivative financial instruments (Note | ?: 13) |
 | liabilities at FVTPL (Note | ?: 25) |
@@ -9396,13 +9399,14 @@ Our Performance
 
 | Label | Values |
 |---|---|
-| Amendments to MFRS | ?: 9 |
-| MFRS | ?: 7 |
-| Instruments | ?: 1<br>?: 2026 |
+| end of each reporting period to adjust for the reduction of | ?: 4. |
+| rates and future pension increases. Due to the complexity of the Amendments to MFRS | ?: 9 |
+| valuation and its long-term nature, a defined benefit obligation MFRS | ?: 7 |
+| assumptions are reviewed at each reporting date. Instruments | ?: 1<br>?: 2026 |
 | In determining the appropriate discount rate, management Amendments to MFRS | ?: 9 |
 | considers the interest/profit rates of high quality government bonds MFRS | ?: 7 |
 | in their respective currencies and extrapolated maturity corresponding Contracts Referencing Nature-dependent Electricity | ?: 1<br>?: 2026 |
-| - Volume | ?: 11<br>?: 1<br>?: 2026 |
+| The mortality rate is based on publicly available mortality tables for - Volume | ?: 11<br>?: 1<br>?: 2026 |
 | the specific countries. Future salary increases and pension increases MFRS | ?: 18 |
 | are based on expected future inflation rates for the respective Statements | ?: 1<br>?: 2027 |
 | countries. MFRS | ?: 19 |
@@ -15775,16 +15779,14 @@ Annual Report 2025
 | (iv) Subscription of rights issue of | ?: 65,413,000 |
 | amounting to approximately | Bank FY_2025: RM68,000<br>Bank FY_2024: 40. |
 | Bank, for an equivalent amount of | Bank FY_2025: RM8.2 |
-| Note | ?: 40. |
 | subsidiary of the Bank injected additional capital of | ?: USD0.8 |
 | (or equivalent amount of | ?: RM3.6<br>?: USD0.7 |
 | equivalent amount of | ?: RM3.0 |
 | Bank. subsidiary of the Bank, for an equivalent amount of | Bank FY_2024: RM5.2 |
 | subsidiary of the Bank injected additional capital of | ?: USD1.5 |
-| (or equivalent amount of | ?: RM6.7<br>?: USD1.5 |
-| amounting to | ?: RM921,000<br>Bank FY_2025: RM79,000, |
+| (or equivalent amount of | ?: RM6.7<br>?: USD1.5<br>?: RM921,000<br>Bank FY_2025: RM79,000, |
 | equivalent amount of | ?: RM6.1 |
-| financial investments at FVTPL, as disclosed in Note | Bank FY_2024: 40. |
+| Insurance (Cambodia) Plc., a wholly-owned subsidiary of the Bank. financial investments at FVTPL, as disclosed in Note | Bank FY_2024: 40. |
 
 ## Page 102
 
@@ -15933,25 +15935,23 @@ Our Performance
 | in relation to the acquisition of | Group FY_2023: 8,336,404 |
 | MAMG, representing | Group FY_2024: 20% |
 | MAMG for a cash consideration of | ?: RM70,391,800 |
-| During the previous financial year ended | ?: 31<br>?: 2024, |
+| exercise of the put option granted by the Bank to PNB. The During the previous financial year ended | ?: 31<br>?: 2024, |
 | acquisition was completed on | Group FY_2023: 23<br>?: 2024. |
-| the Bank through MAMG injected additional capital of | ?: IDR12.0 |
-| Bank, for an equivalent amount of | ?: RM15.9 |
+| the Bank through MAMG injected additional capital of | ?: IDR12.0<br>?: RM15.9 |
 | billion (or equivalent amount of | Group FY_2023: RM3.7<br>?: IDR12.4 |
 | (or equivalent amount of | Group FY_2023: RM3.5 |
 | Maybank Asset Management, a | Group FY_2023: 99.0% |
 | (iii) Subscription of rights issue of | ?: 29,546,000 |
-| the Bank, for an amount of | ?: RM10.0 |
-| subsidiary of the Bank, for total consideration of | ?: USD0.9 |
+| owned subsidiary of the Bank | ?: RM2,192,000<br>?: RM1,032,000, |
 | million (or equivalent amount of | ?: RM4.2 |
 | amounting to | ?: RM26,000<br>?: RM782,000, |
 | capital of | Group FY_2025: USD23.0<br>?: RM105.8 |
 | and | Group FY_2025: USD10.1<br>?: RM45.3 |
 | intermediate holding company of Sorak, injected additional capital | ?: RM1,944,000. |
 | (vi) Acquisition of additional | Group FY_2023: 40.58% |
+| and General Assurance Philippines, Inc. (“ELGAP”) | ?: USD4.1<br>?: RM17.9 |
 | acquisition of additional | Group FY_2023: 40.58% |
 | EIHSBʼs ordinary shareholding in ELGAP increased from | ?: 54.66% |
-| interests within EIH, MBI and MIBGH are disclosed in Note | ?: 64(a). |
 
 ## Page 103
 
@@ -26864,7 +26864,9 @@ Our Performance
 | During the previous financial year ended | ?: 31<br>?: 2024, |
 | managing financial assets under MFRS | ?: 9 |
 | accordance with MFRS | ?: 9 |
-| default, exposure at default and loss given default (Note | ?: 53(e)(1)). |
+| its adequacy and effectiveness in identifying, assessing and | ?: 53(b)(i)). |
+| objectives. To effectively carry out its risk and control oversight | ?: 53(e)(5)). |
+| (“CCB”), and the Audit Committee of the Board (“ACB”) to oversee default, exposure at default and loss given default (Note | ?: 53(e)(1)). |
 | The Management has established various Executive Level in credit risk of an exposure (Note | ?: 53(b)(ii)). |
 | assessed on a collective basis (Note | ?: 53(b)(iii)). |
 | Management Credit Committee, Group Executive Risk and • The details of the ECL calculations for Stage | ?: 1,<br>?: 2 |
@@ -34981,8 +34983,28 @@ Annual Report 2025
 | Annual Report | FY_2025: 2025 |
 | The tables below summarise the Group’s and the Bank’s exposure to interest rate risk as at | ?: 31<br>FY_2025: 2025<br>?: 31<br>FY_2025: 2024. |
 | Up to | ?: 1<br>?: >1<br>?: 3<br>?: >3<br>?: 12<br>?: >1<br>?: 5<br>?: 5 |
+| Cash and short–term funds | ?: 16,642,087<br>?: 7,218,670<br>?: 23,860,757<br>FY_2025: 2.93 |
+| Deposits and placements with financial institutions – | ?: 23,812,238<br>?: 5,430,608<br>?: 353,546<br>FY_2025: 16,747<br>?: 29,613,139<br>FY_2025: 3.27 |
+| Financial assets purchased under resale agreements | ?: 5,666,891<br>?: 4,070,075<br>?: 9,736,966<br>FY_2025: 2.60 |
+| Financial investments at fair value through profit or loss – – – – – – | FY_2025: 21,483,165<br>?: 21,483,165<br>FY_2025: 1.50 |
+| comprehensive income | ?: 955,616<br>?: 1,754,496<br>?: 2,779,907<br>?: 12,373,281<br>?: 46,982,868<br>?: 773,678<br>?: 65,619,846<br>FY_2025: 3.13 |
+| Financial investments at amortised cost | ?: 1,747,331<br>?: 4,778,980<br>?: 11,716,384<br>?: 20,223,685<br>?: 29,499,445<br>?: 67,965,825<br>FY_2025: 2.79 |
+| – Non–impaired | ?: 166,666,426<br>?: 39,406,068<br>?: 18,103,137<br>?: 31,972,801<br>?: 15,040,280<br>?: 271,188,712<br>FY_2025: 4.50 |
+| – Impaired* | ?: 2,068,849<br>?: 2,068,849 |
+| Derivative assets – – – – – – | FY_2025: 17,405,045<br>?: 17,405,045 |
+| Other assets – – – – – | ?: 11,827,919<br>?: 11,827,919 |
 | Other non–interest sensitive balances – – – – – | ?: 44,097,974<br>?: 44,097,974 |
 | Total assets | ?: 193,747,200<br>?: 73,821,857<br>?: 38,030,036<br>?: 64,569,767<br>?: 91,876,139<br>?: 61,657,429<br>FY_2025: 38,888,210<br>?: 562,590,638 |
+| Deposits from customers | ?: 91,866,026<br>?: 64,990,411<br>?: 83,475,392<br>?: 24,223,201<br>?: 35,791,748<br>?: 300,346,778<br>FY_2025: 1.95 |
+| Deposits and placements from financial institutions | ?: 40,117,869<br>?: 10,266,784<br>?: 16,292,728<br>?: 2,951,929<br>?: 259,308<br>?: 69,888,618<br>FY_2025: 3.12 |
+| agreements | ?: 20,322,470<br>?: 12,608,117<br>?: 1,018,481<br>?: 33,949,068<br>FY_2025: 3.21 |
+| Derivative liabilities – – – – – – | FY_2025: 24,156,646<br>?: 24,156,646 |
+| Financial liabilities at fair value through profit or loss | ?: 3,020,275<br>?: 25,550<br>?: 6,750<br>?: 174,610<br>?: 3,521,675<br>?: 6,748,860<br>FY_2025: 3.13 |
+| Bills and acceptances payable – – – – – | ?: 608,709<br>?: 608,709 |
+| Other liabilities | ?: 213,608<br>?: 144,666<br>?: 685,998<br>?: 13,770,006<br>?: 14,814,278<br>FY_2025: 0.31 |
+| Borrowings | ?: 869,205<br>?: 1,240,000<br>?: 5,752,728<br>?: 8,883,971<br>?: 57,018<br>?: 16,802,922<br>FY_2025: 2.81 |
+| Subordinated obligations | ?: 1,888,570<br>?: 3,000,000<br>?: 3,700,000<br>?: 5,550,000<br>?: 14,138,570<br>FY_2025: 3.82 |
+| Capital securities | ?: 17,087<br>?: 1,560,000<br>?: 1,577,087<br>FY_2025: 4.09 |
 | Total liabilities | ?: 158,315,110<br>?: 89,275,528<br>?: 110,773,596<br>?: 40,952,192<br>?: 45,179,749<br>?: 14,378,715<br>FY_2025: 24,156,646<br>?: 483,031,536 |
 | Shareholders’ equity – – – – – | ?: 79,559,102<br>?: 79,559,102 |
 | Total liabilities and shareholders’ equity | ?: 158,315,110<br>?: 89,275,528<br>?: 110,773,596<br>?: 40,952,192<br>?: 45,179,749<br>?: 93,937,817<br>FY_2025: 24,156,646<br>?: 562,590,638 |
@@ -43993,6 +44015,7 @@ Our Performance
 | Amount due from brokers and clients (Note | ?: 15)<br>?: 18,853,645<br>?: (16,440,837)<br>?: 2,412,808<br>?: 2,412,808 |
 | Derivative liabilities | ?: 25,711,239<br>?: (1,175,363)<br>?: 24,535,876<br>?: (10,909,325)<br>?: (1,315,176)<br>?: 12,311,375 |
 | Amount due to brokers and clients (Note | ?: 26)<br>?: 23,096,671<br>?: (16,440,837)<br>?: 6,655,834<br>?: 6,655,834 |
+| Derivative assets | ?: 26,669,040<br>?: (3,251,460)<br>?: 23,417,580<br>?: (15,633,653)<br>?: (3,926,356)<br>?: 3,857,571 |
 | Amount due from brokers and clients (Note | ?: 15)<br>?: 14,213,106<br>?: (12,130,051)<br>?: 2,083,055<br>?: 2,083,055 |
 | Derivative liabilities | ?: 30,745,937<br>?: (3,251,460)<br>?: 27,494,477<br>?: (15,633,653)<br>?: (1,142,943)<br>?: 10,717,881 |
 | Amount due to brokers and clients (Note | ?: 26)<br>?: 16,725,108<br>?: (12,130,051)<br>?: 4,595,057<br>?: 4,595,057 |
@@ -44379,6 +44402,7 @@ Annual Report 2025
 | Annual Report | FY_2025: 2025 |
 | (c) Assessment of Pillar | ?: 1<br>?: 2 |
 | to strengthen the Pillar | ?: 2 |
+| Under Maybank Group Stress Testing Policy, the potential | ?: 59. |
 | (Capital Components) issued on | FY_2025: 14<br>FY_2025: 2024 |
 | Framework (Basel II - Risk-Weighted Assets) issued on | ?: 18 |
 | Framework (Operational Risk) issued on | FY_2025: 15<br>FY_2025: 2023. |
@@ -54348,22 +54372,20 @@ Annual Report 2025
 |---|---|
 | Annual Report | Group FY_2025: 2025 |
 | Datuk Zainal Izlan bin Zainal Abidin (appointed on | Group FY_2025: 1<br>Group FY_2025: 2025) |
-| (appointed on | Group FY_2025: 1<br>Group FY_2025: 2025) |
-| (resigned on | ?: 30<br>?: 2025) |
-| (appointed on | Group FY_2025: 1<br>?: 2026) |
+| Maybank Nor Rashidi bin Mohammad (appointed on | Group FY_2025: 1<br>Group FY_2025: 2025) |
+| (resigned on | ?: 30<br>?: 2025)<br>Group FY_2025: 1<br>?: 2026) |
 | (appointed on | Group FY_2025: 1<br>?: 2026) |
 | Gary Lee Crist (resigned on | ?: 30<br>?: 2025) |
 | (resigned on | Group FY_2025: 30<br>?: 2025) |
 | (resigned on | Group FY_2025: 30<br>?: 2025) |
 | (appointed on | ?: 4<br>?: 2025) |
 | (appointed on | ?: 4<br>?: 2025) |
-| (resigned on | ?: 5<br>?: 2025) |
-| (resigned on | Group FY_2025: 31<br>?: 2025) |
-| (appointed on | Group FY_2025: 1<br>?: 2026) |
-| (resigned on | Group FY_2025: 31<br>?: 2025) |
+| (resigned on | ?: 5<br>?: 2025)<br>Group FY_2025: 31<br>?: 2025) |
+| Dato’ Zulkiflee Abbas bin Abdul Hamid (appointed on | Group FY_2025: 1<br>?: 2026) |
+| Daniel James Rompas (resigned on | Group FY_2025: 31<br>?: 2025) |
 | (resigned on | ?: 11<br>?: 2025) |
-| (appointed on | Group FY_2025: 1<br>?: 2026) |
-| (appointed on | Group FY_2025: 1<br>?: 2026) |
+| Plc. Khieu Mealy (appointed on | Group FY_2025: 1<br>?: 2026) |
+| Syed Ahmad Taufik Albar (appointed on | Group FY_2025: 1<br>?: 2026) |
 | (appointed on | Group FY_2025: 1<br>?: 2026) |
 | (resigned on | Group FY_2025: 14<br>?: 2025) |
 | (appointed on | Group FY_2025: 2<br>Group FY_2025: 2025<br>Group FY_2025: 30 |
@@ -54565,19 +54587,17 @@ Our Performance
 | Nora Junita binti Mohd Hussaini (appointed on | ?: 1<br>?: 2026) |
 | (appointed on | ?: 1<br>?: 2025)<br>?: 1<br>?: 2026) |
 | (appointed on | ?: 1<br>?: 2026) |
-| (appointed on | ?: 4<br>?: 2025) |
-| (resigned on | ?: 17<br>?: 2025) |
-| (appointed on | ?: 4<br>?: 2025) |
-| (resigned on | ?: 31<br>?: 2025) |
+| (resigned on | ?: 17<br>?: 2025)<br>?: 4<br>?: 2025) |
+| (resigned on | ?: 31<br>?: 2025)<br>?: 4<br>?: 2025) |
 | Etiqa General Datuk Mohd Najib bin Abdullah (resigned on | ?: 4<br>?: 2025) |
 | Plc. Kirupalani Chelliah (resigned on | ?: 4<br>?: 2025) |
 | (appointed on | ?: 10<br>?: 2026) |
 | (appointed on | ?: 10<br>?: 2026) |
 | (resigned on | ?: 10<br>?: 2026) |
-| (appointed on | ?: 9<br>?: 2025) |
+| Eng Poh Yoon (appointed on | ?: 9<br>?: 2025) |
 | (resigned on | ?: 10<br>?: 2026) |
 | (resigned on | ?: 9<br>?: 2025) |
-| (resigned on | ?: 1<br>?: 2025) |
+| Choo Sin Fook (resigned on | ?: 1<br>?: 2025) |
 
 ## Page 301
 
@@ -54764,7 +54784,7 @@ Annual Report 2025
 | (appointed on | ?: 8<br>?: 2025) |
 | (resigned on | ?: 8<br>?: 2025) |
 | (appointed on | Group FY_2025: 21<br>?: 2026) |
-| (resigned on | Group FY_2025: 30<br>?: 2025) |
+| (Hong Kong) Limited Li Jia You, Leo (resigned on | Group FY_2025: 30<br>?: 2025) |
 | (appointed on | ?: 8<br>?: 2025) |
 | (appointed on | ?: 8<br>?: 2025) |
 | (resigned on | ?: 8<br>?: 2025) |
@@ -54775,7 +54795,7 @@ Annual Report 2025
 | (appointed on | ?: 2<br>?: 2025) |
 | (resigned on | ?: 2<br>?: 2025) |
 | (Hong Kong) Limited (appointed on | Group FY_2025: 16<br>?: 2026) |
-| (resigned on | Group FY_2025: 16<br>?: 2026) |
+| Limited Dr. Nguyen The Tho (resigned on | Group FY_2025: 16<br>?: 2026) |
 | (appointed on | ?: 18<br>?: 2025) |
 | (appointed on | ?: 18<br>?: 2025) |
 | (appointed on | ?: 12<br>?: 2026) |
@@ -54929,23 +54949,22 @@ Our Performance
 | Label | Values |
 |---|---|
 | Surin Segar a/l Gnanasegaram Management (appointed on | ?: 19<br>?: 2025) |
-| (appointed on | ?: 3<br>?: 2025) |
+| Maybank Alliances Surin Segar a/l Gnanasegaram (appointed on | ?: 3<br>?: 2025) |
 | (resigned on | ?: 19<br>?: 2025) |
 | Sdn. Bhd. (appointed on | ?: 30<br>?: 2025) |
 | (resigned on | ?: 3<br>?: 2025) |
 | (appointed on | ?: 1<br>?: 2025) |
 | (resigned on | ?: 31<br>?: 2025) |
-| (appointed on | ?: 1<br>?: 2025) |
+| Malique Firdauz bin Ahmad Sidique (appointed on | ?: 1<br>?: 2025) |
 | (resigned on | ?: 30<br>?: 2025) |
-| (resigned on | ?: 17<br>?: 2025) |
+| Ismail bin Haron (resigned on | ?: 17<br>?: 2025) |
 | (resigned on | ?: 2<br>?: 2025) |
 | (appointed on | ?: 3<br>?: 2025) |
 | (resigned on | ?: 3<br>?: 2025) |
 | (appointed on | ?: 16<br>?: 2026) |
 | (resigned on | ?: 16<br>?: 2026) |
 | Nominees Pte. Ltd. (appointed on | ?: 15<br>?: 2025) |
-| (appointed on | ?: 29<br>?: 2025) |
-| (resigned on | ?: 30<br>?: 2025) |
+| (appointed on | ?: 29<br>?: 2025)<br>?: 30<br>?: 2025) |
 | (resigned on | ?: 15<br>?: 2025) |
 | (resigned on | ?: 29<br>?: 2025) |
 | (resigned on | ?: 31<br>?: 2025) |

@@ -35,12 +35,11 @@ class PyMuPDFSummaryExtractor:
         page = document[page_number - 1]
         words = page.get_text("words")
         rows = _group_words_by_line(words)
-        table_bbox = (55.0, 180.0, 705.0, 412.0)
         extracted: dict[tuple[str, str], SummaryRow] = {}
+        row_bboxes: list[tuple[float, float, float, float]] = []
 
         for row_words in rows:
-            label_words = [w for w in row_words if w[0] < 330]
-            value_words = [w for w in row_words if w[0] >= 330]
+            label_words, value_words = _split_label_values(row_words)
             if not label_words or not value_words:
                 continue
             label = " ".join(w[4] for w in label_words)
@@ -54,19 +53,44 @@ class PyMuPDFSummaryExtractor:
                     continue
 
                 row_bbox = _bbox(row_words)
+                row_bboxes.append(row_bbox)
                 extracted[(match.canonical_name, period)] = SummaryRow(
                     label=label,
                     value=value,
                     period=period,
                     page_number=page_number,
-                    table_bbox=table_bbox,
+                    table_bbox=(0.0, 0.0, 0.0, 0.0),  # set below
                     row_bbox=row_bbox,
                     confidence=match.confidence,
                     canonical_name=match.canonical_name,
                 )
 
+        if row_bboxes and extracted:
+            table_bbox = (
+                min(b[0] for b in row_bboxes),
+                min(b[1] for b in row_bboxes),
+                max(b[2] for b in row_bboxes),
+                max(b[3] for b in row_bboxes),
+            )
+            result = []
+            for key, row in extracted.items():
+                result.append(
+                    SummaryRow(
+                        label=row.label,
+                        value=row.value,
+                        period=row.period,
+                        page_number=row.page_number,
+                        table_bbox=table_bbox,
+                        row_bbox=row.row_bbox,
+                        confidence=row.confidence,
+                        canonical_name=row.canonical_name,
+                    )
+                )
+        else:
+            result = []
+
         document.close()
-        return list(extracted.values())
+        return result
 
 
 def _group_words_by_line(words: list[tuple]) -> list[list[tuple]]:
@@ -76,11 +100,25 @@ def _group_words_by_line(words: list[tuple]) -> list[list[tuple]]:
             rows.append([word])
             continue
         current_y = sum(float(w[1]) for w in rows[-1]) / len(rows[-1])
-        if abs(float(word[1]) - current_y) <= 2.0:
+        if abs(float(word[1]) - current_y) <= 4.0:
             rows[-1].append(word)
         else:
             rows.append([word])
     return [sorted(row, key=lambda w: w[0]) for row in rows]
+
+
+def _split_label_values(row_words: list[tuple]) -> tuple[list[tuple], list[tuple]]:
+    first_numeric_x = None
+    for word in row_words:
+        if parse_numeric_value(["label", str(word[4])]) is not None:
+            first_numeric_x = float(word[0])
+            break
+    if first_numeric_x is None:
+        return row_words, []
+    split = first_numeric_x - 8
+    labels = [w for w in row_words if float(w[0]) < split]
+    values = [w for w in row_words if float(w[0]) >= split]
+    return labels, values
 
 
 def _group_value_words(value_words: list[tuple]) -> list[tuple[str, tuple]]:

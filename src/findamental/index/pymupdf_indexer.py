@@ -20,7 +20,7 @@ class PyMuPDFDocumentIndexer:
         pages = []
         for page_index, page in enumerate(document, start=1):
             words = page.get_text("words")
-            rows = _rows_from_words(words, page_index)
+            rows = _rows_from_words(words, page_index, page.rect.width)
             pages.append(
                 IndexedPage(
                     page_number=page_index,
@@ -42,7 +42,7 @@ class PyMuPDFDocumentIndexer:
         )
 
 
-def _rows_from_words(words: list[tuple], page_number: int) -> list[IndexedRow]:
+def _rows_from_words(words: list[tuple], page_number: int, page_width: float) -> list[IndexedRow]:
     visual_rows = _group_words_by_y(words)
     year_columns = _year_columns(visual_rows)
     indexed = []
@@ -74,7 +74,7 @@ def _rows_from_words(words: list[tuple], page_number: int) -> list[IndexedRow]:
                 label=label,
                 page_number=page_number,
                 bbox=row_bbox,
-                table_bbox=_table_bbox_for_row(row_bbox),
+                table_bbox=_table_bbox_for_row(row_bbox, page_width),
                 cells=cells,
                 section=current_section,
                 unit_hint=current_unit,
@@ -90,7 +90,7 @@ def _group_words_by_y(words: list[tuple]) -> list[list[tuple]]:
             rows.append([word])
             continue
         current_y = sum(float(w[1]) for w in rows[-1]) / len(rows[-1])
-        if abs(float(word[1]) - current_y) <= 2.0:
+        if abs(float(word[1]) - current_y) <= 4.0:
             rows[-1].append(word)
         else:
             rows.append([word])
@@ -231,6 +231,6 @@ def _bbox(words: list[tuple]) -> tuple[float, float, float, float]:
     )
 
 
-def _table_bbox_for_row(row_bbox: tuple[float, float, float, float]) -> tuple[float, float, float, float]:
+def _table_bbox_for_row(row_bbox: tuple[float, float, float, float], page_width: float) -> tuple[float, float, float, float]:
     x0, y0, x1, y1 = row_bbox
-    return (max(0.0, x0 - 12), max(0.0, y0 - 90), min(740.0, x1 + 12), y1 + 90)
+    return (max(0.0, x0 - 12), max(0.0, y0 - 90), min(page_width, x1 + 12), y1 + 90)

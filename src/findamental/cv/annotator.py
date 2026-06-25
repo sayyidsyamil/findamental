@@ -34,6 +34,13 @@ class PageAnnotator:
             row_box[2] - crop_box[0],
             row_box[3] - crop_box[1],
         )
+        cw, ch = crop.size
+        relative = (
+            max(0, int(relative[0])),
+            max(0, int(relative[1])),
+            min(cw, int(relative[2])),
+            min(ch, int(relative[3])),
+        )
         draw.rectangle(relative, fill=(255, 230, 0, 76), outline=(230, 180, 0, 220), width=3)
         Image.alpha_composite(crop.convert("RGBA"), overlay).convert("RGB").save(output_path)
         document.close()

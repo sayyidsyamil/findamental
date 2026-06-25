@@ -426,7 +426,8 @@ def _image_for_match(resolved: ResolvedLookup) -> Path:
         ]
         if part
     )
-    image_name = f"{resolved.document.document_id}_{_slug(resolved.row.label)}_{suffix}.png"
+    ts = int(resolved.document.indexed_at.timestamp())
+    image_name = f"{resolved.document.document_id}_{_slug(resolved.row.label)}_{suffix}_{ts}.png"
     image_path = settings.CACHE_DIR / image_name
     if not image_path.exists():
         PageAnnotator().crop_and_annotate(
