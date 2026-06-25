@@ -1,5 +1,7 @@
 import argparse
 import asyncio
+import json
+import re
 from datetime import datetime
 from pathlib import Path
 
@@ -9,6 +11,7 @@ from findamental.cache.store import CacheStore, ExtractedFiling, ExtractedLineIt
 from findamental.config import settings
 from findamental.cv.line_item_matcher import LineItemMatcher, parse_numeric_value
 from findamental.maybank_cache import build_maybank_cache
+from findamental.output.telegram_response import TelegramResponse
 from findamental.service import FindamentalService, intro_text
 
 
@@ -17,13 +20,21 @@ console = Console()
 
 def query_main() -> None:
     parser = argparse.ArgumentParser(description="Query the Findamental local cache")
+    parser.add_argument("--json", action="store_true", help="Output structured JSON for charting")
     parser.add_argument("query", nargs="*")
     args = parser.parse_args()
     query = " ".join(args.query).strip()
     if not query:
+        if args.json:
+            print(json.dumps({"error": "No query provided"}))
+            return
         console.print(intro_text())
         return
     response = asyncio.run(FindamentalService().answer(query))
+    if args.json:
+        chart_data = _build_chart_data(response)
+        print(json.dumps(chart_data))
+        return
     console.print(response.text)
     if response.image_path:
         console.print(f"Image: {response.image_path}")
@@ -120,3 +131,56 @@ def _period_from_filing_type(filing_type: str) -> str:
     if filing_type.startswith("Q3_2024"):
         return "Q3_2024"
     return filing_type
+
+
+def _parse_chart_number(raw: str) -> float | None:
+    s = raw.strip().replace(",", "")
+    is_negative = s.startswith("(") and s.endswith(")")
+    if is_negative:
+        s = "-" + s[1:-1]
+    cleaned = re.sub(r"[^0-9.\-]", "", s)
+    if not cleaned:
+        return None
+    try:
+        return float(cleaned)
+    except ValueError:
+        return None
+
+
+def _infer_chart_unit(labels: list[str]) -> str:
+    joined = " ".join(labels).lower()
+    if any(t in joined for t in ["%", "ratio", "roe", "roa", "margin", "return on"]):
+        return "%"
+    if any(t in joined for t in ["eps", "sen", "per share"]):
+        return "sen"
+    return "RM million"
+
+
+def _build_chart_data(response: TelegramResponse) -> dict:
+    text = response.text
+    labels: list[str] = []
+    values: list[float] = []
+    title = ""
+    current_period: str | None = None
+
+    for line in text.splitlines():
+        if not title:
+            m = re.search(r"<b>(.+?)</b>", line)
+            if m:
+                title = m.group(1)
+
+        header_match = re.search(r"<b>(?:.*?)\s*-\s*(.+?)</b>", line)
+        if header_match:
+            current_period = header_match.group(1).strip()
+
+        value_match = re.search(r":\s*<b>(.+?)</b>", line)
+        if value_match and current_period:
+            num = _parse_chart_number(value_match.group(1))
+            if num is not None:
+                label_m = re.match(r"([^:\n]+?)\s*:", line)
+                label = label_m.group(1).strip() if label_m else "Value"
+                labels.append(f"{label} ({current_period})")
+                values.append(num)
+
+    unit = _infer_chart_unit(labels)
+    return {"title": title, "labels": labels, "values": values, "unit": unit}

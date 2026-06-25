@@ -1,4 +1,4 @@
-﻿import argparse
+import argparse
 import json
 import os
 import re
@@ -11,6 +11,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_UV = Path.home() / ".local" / "bin" / "uv"
 
 
+
 def parse_number(s: str) -> float:
     s = re.sub(r"<[^>]+>", "", s)
     s = (
@@ -20,6 +21,7 @@ def parse_number(s: str) -> float:
         .replace(")", "")
         .replace("RM", "")
         .replace("million", "")
+        .replace("thousand", "")
         .replace("sen", "")
         .replace("%", "")
         .replace("x", "")
@@ -45,39 +47,36 @@ def parse_key_values(text: str) -> dict[str, float]:
 
 def fetch_from_findamental(query: str) -> dict[str, float]:
     uv = Path(os.environ.get("FINDAMENTAL_UV", DEFAULT_UV))
-    command = [str(uv), "run", "findamental-query", query] if uv.exists() else ["findamental-query", query]
+    command = [str(uv), "run", "findamental-query", "--json", query] if uv.exists() else ["findamental-query", "--json", query]
     result = subprocess.run(
         command,
         cwd=PROJECT_ROOT,
         capture_output=True,
         text=True,
     )
+    if result.returncode != 0:
+        err = result.stderr.strip() or result.stdout.strip() or "unknown error"
+        print(f"findamental-query failed: {err}")
+        sys.exit(1)
+
     output = result.stdout.strip()
     if not output:
         print("No data returned from findamental-query. Check the query or cache.")
         sys.exit(1)
 
-    data: dict[str, float] = {}
-    current_period: str | None = None
+    try:
+        parsed = json.loads(output)
+    except json.JSONDecodeError:
+        print(f"Expected JSON output but got:\n{output}")
+        sys.exit(1)
 
-    for line in output.splitlines():
-        bold_header = re.search(r"<b>.*?- (.+?)</b>", line)
-        if bold_header:
-            current_period = bold_header.group(1).strip()
+    if "error" in parsed:
+        print(f"Error: {parsed['error']}")
+        sys.exit(1)
 
-        value_match = re.search(r":\s*<b>(.+?)</b>", line)
-        if value_match and current_period:
-            label_match = re.match(r"([^:\n]+?)\s*:", line)
-            label = label_match.group(1).strip() if label_match else "Value"
-            raw = value_match.group(1).strip()
-            num = parse_number(raw)
-            if num != 0.0 or any(c.isdigit() for c in raw):
-                key = f"{label} ({current_period})"
-                data[key] = num
-
-    if data:
-        return data
-    return parse_key_values(output)
+    labels = parsed.get("labels", [])
+    values = parsed.get("values", [])
+    return dict(zip(labels, values))
 
 
 def infer_unit(data: dict) -> str:

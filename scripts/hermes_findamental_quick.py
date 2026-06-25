@@ -53,6 +53,8 @@ def _clean_query(text: str) -> str:
         lowered = re.sub(r"[^a-z0-9]", "", token.lower())
         if lowered in CHART_WORDS:
             continue
+        if re.fullmatch(r"20\d{2}", lowered):
+            continue
         words.append(token)
     return " ".join(words).strip()
 
